@@ -1,4 +1,4 @@
-import {Link} from "react-router-dom";
+import {Link,redirect} from "react-router-dom";
 import {useRef,useState} from 'react';
 import axiosClient from "../axios-client";
 import {useDispatch} from 'react-redux';
@@ -25,12 +25,13 @@ export default function Signup() {
         setLoading(true);
         axiosClient.post('/signup',userData).then(({data}) => {
             dispatch(authActions.setToken(data.token));
+            dispatch(authActions.setUser(data.user));
             dispatch(uiActions.showNotification({
                 status  : 'success',
-                title   : '' ,
                 message : data.message ,
             }));
             setLoading(false);
+            redirect('/dashboard');
         }).catch(err => {
             const response = err.response;
             if (response && response.status == 401){
@@ -72,11 +73,13 @@ export default function Signup() {
                     {errors.password && <p className='text-red-500 text-left'>{errors.password}</p>}
                 </div>
                 <div className="mb-10">
+
                     <input
                         type="submit"
                         value="Sign Up"
-                        className="bordder-primary w-full cursor-pointer rounded-md border bg-primary py-3 px-5 text-base text-white transition duration-300 ease-in-out hover:shadow-md"
+                        className="border-primary w-full cursor-pointer rounded-md border bg-primary py-3 px-5 text-base text-white transition duration-300 ease-in-out hover:shadow-md "
                     />
+
                 </div>
             </form>
             <p className="text-base text-[#adadad]">

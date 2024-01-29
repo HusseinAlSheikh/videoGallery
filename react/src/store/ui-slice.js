@@ -18,9 +18,12 @@ const uiSlice = createSlice({
         showNotification(state,action) {
             state.notification = {
                 status  : action.payload.status , // error success pending ....
-                title   : action.payload.title , 
+                // title   : action.payload.title ,
                 message : action.payload.message , 
             };
+        },
+        c(state) {
+            state.notification = null;
         },
         setTheme(state,action){
             state.theme = action.payload

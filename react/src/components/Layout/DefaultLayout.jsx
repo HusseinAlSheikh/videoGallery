@@ -1,5 +1,6 @@
 import {Link,Outlet,Navigate} from 'react-router-dom';
 import {useSelector} from "react-redux";
+import Notification from "../UI/Notification";
 
 export default function DefaultLayout(){
     const token= useSelector(state => state.auth.token);
@@ -30,8 +31,10 @@ export default function DefaultLayout(){
     // },[]);
 
 
+
     return (
-        <div>
+        <>
+            <Notification />
             <aside>
                 <Link to="/dashboard">Dashboard</Link>
                 <Link to="/users">Users</Link>
@@ -49,6 +52,6 @@ export default function DefaultLayout(){
                     <Outlet/>
                 </main>
             </div>
-        </div>
+        </>
     );
 };

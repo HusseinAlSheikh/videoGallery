@@ -6,7 +6,7 @@ import NotFound from './pages/NotFound';
 import DefaultLayout from './components/Layout/DefaultLayout';
 import GuestLayout from './components/Layout/GuestLayout';
 import Dashboard from './pages/Dashboard';
-import Home from './pages/Home';
+// import Home from './pages/Home';
 import UserVideos from './pages/User-Videos';
 
 
@@ -17,7 +17,7 @@ const router = createBrowserRouter([
         children:[
             {
                 path:'/',
-                element:<Navigate to="/Home"/>
+                element:<Navigate to="/dashboard"/>
             },
             {
                 path:'/users',
@@ -29,9 +29,6 @@ const router = createBrowserRouter([
             },{
                 path:'/dashboard',
                 element:<Dashboard/>
-            },{
-                path:'/home',
-                element:<Home/>
             }
         ]
     },
