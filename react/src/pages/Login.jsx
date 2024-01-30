@@ -4,6 +4,9 @@ import {useDispatch} from "react-redux";
 import axiosClient from "../axios-client";
 import {authActions} from "../store/auth-slice";
 import {uiActions} from "../store/ui-slice";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSpinner } from '@fortawesome/free-solid-svg-icons'
+
 export default function Login() {
     const emailRef = useRef();
     const passwordRef = useRef();
@@ -65,11 +68,23 @@ export default function Login() {
                     {errors.password && <p className='text-red-500 text-left'>{errors.password}</p>}
                 </div>
                 <div className="mb-10">
-                    <input
+                    {/* <input
                         type="submit"
                         value="Sign In"
-                        className="bordder-primary w-full cursor-pointer rounded-md border bg-primary py-3 px-5 text-base text-white transition duration-300 ease-in-out hover:shadow-md"
-                    />
+                        className="bordder-primary w-full cursor-pointer rounded-md border bg-primary py-3 px-5 text-base text-white transition duration-300 ease-in-out hover:shadow-md "
+                        disabled
+                    /> */}
+                    <button  
+                    disabled={loading?'disabled':''}
+                    type='submit' 
+                    className={"bordder-primary w-full  rounded-md border bg-primary py-3 px-5 text-base text-white transition duration-300 ease-in-out hover:shadow-md  space-x-2 items-center  "+(loading?'cursor-not-allowed':'cursor-pointer')}>
+                        <span>
+                            Sign In
+                        </span>
+                        {loading &&
+                                <FontAwesomeIcon icon={faSpinner}  className="fa-spin" />   
+                        }
+                    </button>
                 </div>
             </form>
             <p className="text-base text-[#adadad]">

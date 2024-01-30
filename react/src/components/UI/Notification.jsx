@@ -1,12 +1,13 @@
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {useState} from 'react';
-
+import { uiActions } from "../../store/ui-slice";
 const Notification = () => {
     const notification = useSelector(state => state.ui.notification);
     if (!notification){
         return (<></>);
     }
     const [isShowNotification,setIsShowNotification] = useState(true);
+    const dispatch = useDispatch();
     let statusClasses = 'bg-primary' ;
     if (notification.status=='success' ){
         statusClasses =' bg-green-600 ';
@@ -18,6 +19,7 @@ const Notification = () => {
 
     setTimeout(()=>{
         setIsShowNotification(false);
+        dispatch(uiActions.showNotification(null));
     },3000);
 
 
