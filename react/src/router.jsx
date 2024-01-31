@@ -8,6 +8,7 @@ import GuestLayout from './components/Layout/GuestLayout';
 import Dashboard from './pages/Dashboard';
 // import Home from './pages/Home';
 import UserVideos from './pages/User-Videos';
+import ModernLogin from './pages/ModernLogin';
 
 
 const router = createBrowserRouter([
@@ -38,11 +39,11 @@ const router = createBrowserRouter([
         children:[
             {
                 path:'/login',
-                element:<Login/>
+                element:<ModernLogin key='login' isLogin={true} />
             },
             {
                 path:'/signup',
-                element:<Signup/>
+                element:<ModernLogin key='signup' isLogin={false}  />
             }
         ]
     },
