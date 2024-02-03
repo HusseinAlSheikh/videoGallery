@@ -1,11 +1,23 @@
 import axios from 'axios';
 const axiosClient = axios.create({
-    baseURL: `http://127.0.0.1:8000/api`
+    baseURL: `http://127.0.0.1:8000/api`,
+    headers : {
+        Accept:'application/json' ,
+    }
 });
 
-axiosClient.interceptors.request.use((config)=>{
+axiosClient.interceptors.request.use( async (config)=>{
     const token = localStorage.getItem('ACCESS_TOKEN');
     config.headers.Authorization =`Bearer ${token}`;
+    // if(config.method=='get')
+    //    return config;
+    // let csrf = getCookie('XSRF-TOKEN');
+    // if(!csrf){
+    //     //-------- get new csrf 
+    //     await axios.get('/sanctum/csrf-cookie');
+    //     csrf = getCookie('XSRF-TOKEN');
+    // }
+    // config.headers.X-XSRF-TOKEN = csrf;
     return config;
 });
 

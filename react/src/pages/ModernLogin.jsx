@@ -97,7 +97,16 @@ const ModernLogin = (props) => {
                 {errors.email && <span className='text-red-600 text-left text-sm'>{errors.email}</span>}
                 <input ref={signupPasswordRef} type="password" placeholder="Password"/>
                 {errors.password && <span className='text-red-500 left-0'>{errors.password}</span>}
-                <button type='submit'>Sign Up</button>
+                <button
+                     type='submit' 
+                     disabled={loading?'disabled':''}
+                     className='disabled:opacity-75 disabled:cursor-not-allowed'
+                 >
+                    Sign Up
+                    {loading &&
+                                <span className="fa-spin px-2" > loading </span>   
+                        }
+                </button>
             </form>
         </div>
 
@@ -110,7 +119,16 @@ const ModernLogin = (props) => {
                 <input ref={loginPasswordRef} type="password" placeholder="Password"/>
                 {errors.password && <span className='text-red-500 left-0'>{errors.password}</span>}
                 {/* <a href="#">Forget Your Password?</a> */}
-                <button type='submit'>Sign In</button>
+                <button 
+                type='submit'
+                disabled={loading?'disabled':''}
+                className='disabled:opacity-75 disabled:cursor-not-allowed'
+                >
+                    Sign In
+                {loading &&
+                             <span className="fa-spin px-2" > loading </span>   
+                        }
+                </button>
             </form>
         </div>
         <div className="toggle-container">
@@ -118,7 +136,9 @@ const ModernLogin = (props) => {
                 <div className="toggle-panel toggle-left">
                     <h1>Welcome Back!</h1>
                     <p>Enter your personal details to use all of site features</p>
-                    <button className={isLogin?"hidden":''} id="login" onClick={loginRouteButtonHandler}>Sign In</button>
+                    <button 
+                    className={isLogin?"hidden":''} 
+                    id="login" onClick={loginRouteButtonHandler}>Sign In</button>
                 </div>
                 <div className="toggle-panel toggle-right">
                     <h1>Hello, Friend!</h1>
