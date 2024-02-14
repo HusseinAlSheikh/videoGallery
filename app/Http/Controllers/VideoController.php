@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateVideoRequest;
+use App\Http\Requests\UpdateVideoRequest;
 use App\Models\Video;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -28,7 +29,8 @@ class VideoController extends Controller
         $validator = Validator::make($request->all(),[
             'url'   => 'required',
             'title' => 'required',
-            'isPublic' => 'required',
+            'is_public' => 'required',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
         //-------
         if($validator->fails()){
@@ -39,12 +41,12 @@ class VideoController extends Controller
             ],401);
         }
         //------------
-        $imagePath = '' ;
+        $imagePath = $request->file('image')->store('images', 'public');
         //------------
         $video = Video::create([
             'url'     => $request->url ,
             'title'   => $request->title ,
-            'is_public'   => $request->isPublic ,
+            'is_public'   => $request->is_public ,
             'image_path' => $imagePath,
             'user_id' => Auth::user()->id
         ]);
@@ -70,13 +72,21 @@ class VideoController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Video $video)
+    public function update(UpdateVideoRequest $request, Video $video)
     {
-        dd($request->url,$video);
+        ///------------------
+        if (Auth::user()->id !== $video->user_id){
+            return response()->json([
+                'status'  => false,
+                'message' => 'un authoraize action ',
+            ],401);
+        }
+        ///------------------
         $validator = Validator::make($request->all(),[
             'url'   => 'required',
             'title' => 'required',
-            'isPublic' => 'required'
+            'is_public' => 'required',
+            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
         //-------
         if($validator->fails()){
@@ -87,12 +97,14 @@ class VideoController extends Controller
             ],401);
         }
         //------------
-        $imagePath = '' ;
+        if ($request->hasFile('image')){
+            $imagePath = $request->file('image')->store('images', 'public');
+            $video-> image_path = $imagePath ;
+        }
         //------------
         $video-> url = $request->url ;
         $video-> title = $request->title ;
-        $video-> is_public = $request->isPublic ;
-        $video-> image_path = $imagePath ;
+        $video-> is_public = $request->is_public ;
         $video = $video->save();
         return response()->json([
             'status'  => true,
@@ -106,10 +118,25 @@ class VideoController extends Controller
      */
     public function destroy(Video $video)
     {
+        if (Auth::user()->id !== $video->user_id){
+            return response()->json([
+                'status'  => false,
+                'message' => 'un authoraize action ',
+            ],401);
+        }
         $video->delete();
         return response()->json([
             'status'  => true,
             'message' => 'Video Deleted Successfully',
         ],200);
     }
+
+    //--------------------------
+    function getLatestPublicVideos(){
+        $latestVideos = Video::where('is_public' , true)->latest()->get();
+        return response()->json([
+            'videos' => $latestVideos
+        ]);
+    }
+    //--------------------------
 }

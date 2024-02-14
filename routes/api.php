@@ -25,11 +25,8 @@ Route::middleware('auth:sanctum')->group(function(){
 });
 
 
-
-
-
 Route::post('/login',[UserController::class,'loginUser']);
 Route::post('/signup',[UserController::class,'createUser']);
 
-
+Route::get('/public-videos' , [VideoController::class,'getLatestPublicVideos']);
 
