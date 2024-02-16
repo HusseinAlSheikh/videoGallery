@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\UserController;
-use App\Http\Controllers\VideoController;
+use App\Http\Controllers\Api\VideoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 

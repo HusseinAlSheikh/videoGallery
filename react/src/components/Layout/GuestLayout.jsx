@@ -1,5 +1,9 @@
 import { Outlet , Navigate  } from "react-router-dom";
 import {useSelector} from 'react-redux';
+import Container from '@mui/material/Container';
+import Box from '@mui/material/Box';
+
+
 export default function GuestLayout(){
     const token = useSelector(state => state.auth.token);
     if (token){
@@ -7,22 +11,20 @@ export default function GuestLayout(){
     }
 
     return (
-        // <section className="bg-[#F4F7FF] py-14 lg:py-20">
-        //     <div className="container">
-        //         <div className="-mx-4 flex flex-wrap">
-        //             <div className="w-full px-4">
-        //                 <div
-        //                     className="wow fadeInUp relative mx-auto max-w-[525px] overflow-hidden rounded-lg bg-white py-14 px-8 text-center sm:px-12 md:px-[60px]"
-        //                     data-wow-delay=".15s"
-        //                 >
-        //                     <div className="mb-10 text-center">
-        //                         <img src="assets/images/logo/logo.svg" alt="logo"/>
-        //                     </div>
-                            <Outlet/>
-        //                 </div>
-        //             </div>
-        //         </div>
-        //     </div>
-        // </section>
+        <>
+            <Container component="main" maxWidth="xs">
+                {/*<CssBaseline />*/}
+                <Box
+                    sx={{
+                        marginTop: 8,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                    }}
+                >
+                  <Outlet/>
+                </Box>
+            </Container>
+        </>
     );
 };

@@ -8,7 +8,6 @@ import { Backdrop, CircularProgress } from '@mui/material';
 
 
 const ModernLogin = (props) => {
-    console.log(props);
     //---------------
     const loginEmailRef = useRef();
     const loginPasswordRef = useRef();
@@ -83,13 +82,13 @@ const ModernLogin = (props) => {
     const [isLogin,setIsLogin] = useState(props.isLogin);
     const loginRouteButtonHandler = () => {
         setIsLogin(true);
-    }
+    };
     const registerRouteButtonHandler = () => {
         setIsLogin(false);
-    }
-    const handleClose = () => {
-        setOpen(false);
-      };
+    };
+    // const handleClose = () => {
+    //     setOpen(false);
+    // };
 
     
     return(
@@ -158,7 +157,6 @@ const ModernLogin = (props) => {
             <Backdrop
                 sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
                 open={loading}
-                onClick={handleClose}
             >
                 <CircularProgress color="inherit" />
             </Backdrop>

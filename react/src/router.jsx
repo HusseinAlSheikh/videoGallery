@@ -4,15 +4,15 @@ import NotFound from './pages/NotFound';
 import DefaultLayout from './components/Layout/DefaultLayout';
 import GuestLayout from './components/Layout/GuestLayout';
 import Dashboard from './pages/Dashboard';
-// import Home from './pages/Home';
 import UserVideos from './pages/User-Videos';
-import ModernLogin from './pages/ModernLogin';
+import Login from './pages/Login';
+import Register from './pages/Register';
 
 
 const router = createBrowserRouter([
     {
         path:'/' , 
-        element:<DefaultLayout/>,
+        element:<DefaultLayout />,
         children:[
             {
                 path:'/',
@@ -27,7 +27,7 @@ const router = createBrowserRouter([
                 element:<UserVideos />
             },{
                 path:'/dashboard',
-                element:<Dashboard/>
+                element:<Dashboard />
             }
         ]
     },
@@ -37,11 +37,11 @@ const router = createBrowserRouter([
         children:[
             {
                 path:'/login',
-                element:<ModernLogin key='login' isLogin={true} />
+                element:<Login />
             },
             {
-                path:'/signup',
-                element:<ModernLogin key='signup' isLogin={false}  />
+                path:'/register',
+                element:<Register />
             }
         ]
     },

@@ -9,15 +9,17 @@ const axiosClient = axios.create({
 axiosClient.interceptors.request.use( async (config)=>{
     const token = localStorage.getItem('ACCESS_TOKEN');
     config.headers.Authorization =`Bearer ${token}`;
-    // if(config.method=='get')
-    //    return config;
-    // let csrf = getCookie('XSRF-TOKEN');
-    // if(!csrf){
-    //     //-------- get new csrf 
-    //     await axios.get('/sanctum/csrf-cookie');
-    //     csrf = getCookie('XSRF-TOKEN');
-    // }
-    // config.headers.X-XSRF-TOKEN = csrf;
+    if(config.method=='get')
+       return config;
+    let csrf = getCookie('XSRF-TOKEN');
+    if(!csrf){
+        //-------- get new csrf
+        await axios.get('/sanctum/csrf-cookie');
+        csrf = getCookie('XSRF-TOKEN');
+
+    }
+    config.headers['X-XSRF-TOKEN'] = csrf;
+    console.log(config);
     return config;
 });
 
@@ -25,6 +27,7 @@ axiosClient.interceptors.request.use( async (config)=>{
 axiosClient.interceptors.response.use((response)=>{
     return response;
 },(error)=>{
+    console.log(error);
     try {
         const {response} = error;
         if (response.status == 401){
@@ -36,5 +39,22 @@ axiosClient.interceptors.response.use((response)=>{
 
     throw error;
 });
+
+
+function getCookie(cname) {
+    let name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+    for(let i = 0; i <ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
 
 export default axiosClient;
