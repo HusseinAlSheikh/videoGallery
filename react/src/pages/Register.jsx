@@ -40,12 +40,17 @@ export default function Register() {
             setLoading(false);
             redirect('/dashboard');
         }).catch(err => {
-            const response = err.response;
-            if (response && response.status == 401){
-                //--- validation error
-                setErrors(response.data.errors);
-
+            if(err.code === 'ERR_NETWORK'){
+                setErrors({'networkErroe':err.message});
+            }else{
+                const response = err.response;
+                if (response && response.status == 401){
+                    //--- validation error
+                    setErrors(response.data.errors);
+                    
+                } 
             }
+            
             setLoading(false);
         });
     };
@@ -91,8 +96,9 @@ export default function Register() {
                     className=""
                 />
                 {errors.password && <span className='text-red-500 left-0'>{errors.password}</span>}
+                {errors.networkErroe && <span className='text-red-600 text-left text-sm'>{errors.networkErroe}</span>}
                 <Button
-                    disabled={loading?'disabled':''}
+                    disabled={loading}
                     className='disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-blue-800'
                     type="submit"
                     fullWidth
@@ -104,6 +110,7 @@ export default function Register() {
                         <span className=" px-2" > loading icon </span>
                     }
                 </Button>
+
                 <Grid container>
                     <Grid item>
                         <Link to="/login" className="text-blue-700">

@@ -19,7 +19,6 @@ axiosClient.interceptors.request.use( async (config)=>{
 
     }
     config.headers['X-XSRF-TOKEN'] = csrf;
-    console.log(config);
     return config;
 });
 
@@ -27,7 +26,7 @@ axiosClient.interceptors.request.use( async (config)=>{
 axiosClient.interceptors.response.use((response)=>{
     return response;
 },(error)=>{
-    console.log(error);
+   
     try {
         const {response} = error;
         if (response.status == 401){

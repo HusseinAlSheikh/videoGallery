@@ -7,6 +7,7 @@ import Dashboard from './pages/Dashboard';
 import UserVideos from './pages/User-Videos';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import Train from './pages/Train';
 
 
 const router = createBrowserRouter([
@@ -42,6 +43,10 @@ const router = createBrowserRouter([
             {
                 path:'/register',
                 element:<Register />
+            },
+            {
+                path:'/train',
+                element:<Train />
             }
         ]
     },

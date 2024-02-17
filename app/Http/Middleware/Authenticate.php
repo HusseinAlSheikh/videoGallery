@@ -7,6 +7,14 @@ use Illuminate\Http\Request;
 
 class Authenticate extends Middleware
 {
+
+    // protected function unauthenticated($request, array $guards)
+    // {
+    //     if ($request->expectsJson()) {
+    //         return response()->json(['message' => 'Unauthenticated.'], 401);
+    //     }
+    //     return redirect()->guest(route('login'));
+    // }
     /**
      * Get the path the user should be redirected to when they are not authenticated.
      */
@@ -14,4 +22,7 @@ class Authenticate extends Middleware
     {
         return $request->expectsJson() ? null : route('login');
     }
+
+   
+
 }
